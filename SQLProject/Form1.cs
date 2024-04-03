@@ -32,6 +32,7 @@ namespace SQLProject
 
         private void InitializelistBoxQueries()
         {
+            listBoxQueries.Items.Clear();
             List<string> newFiles = _gitChangesProvider.GetCreatedFiles(_gitRepositoryPath);
             List<string> modifiedFiles = _gitChangesProvider.GetModifiedFiles(_gitRepositoryPath);
             List<string> deletedFiles = _gitChangesProvider.GetDeletedFiles(_gitRepositoryPath);
@@ -40,7 +41,7 @@ namespace SQLProject
             foreach (string file in newFiles)
                 listBoxQueries.Items.Add("A  " + file);
             foreach (string modifiedFile in modifiedFiles)
-                listBoxQueries.Items.Add("AM " + modifiedFile);
+                listBoxQueries.Items.Add("M  " + modifiedFile);
             foreach (string deletedFile in deletedFiles)
                 listBoxQueries.Items.Add("D??" + deletedFile);
             foreach (string untrackedFile in untrackedFiles)
