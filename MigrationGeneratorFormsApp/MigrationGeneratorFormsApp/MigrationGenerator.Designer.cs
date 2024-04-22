@@ -29,58 +29,87 @@
         private void InitializeComponent()
         {
             richFileTextBox = new RichTextBox();
-            listBoxQueries = new ListBox();
             GenerateMigration = new Button();
             folderBrowserDialog = new FolderBrowserDialog();
+            label1 = new Label();
+            textBoxSourceRepositoryPath = new TextBox();
+            buttonSelectSourceRepository = new Button();
             SuspendLayout();
             // 
             // richFileTextBox
             // 
-            richFileTextBox.Location = new Point(12, 278);
+            richFileTextBox.Dock = DockStyle.Fill;
+            richFileTextBox.Location = new Point(0, 0);
+            richFileTextBox.Margin = new Padding(2, 2, 2, 10);
             richFileTextBox.Name = "richFileTextBox";
-            richFileTextBox.Size = new Size(1950, 729);
+            richFileTextBox.Size = new Size(1522, 894);
             richFileTextBox.TabIndex = 0;
             richFileTextBox.Text = "";
             // 
-            // listBoxQueries
-            // 
-            listBoxQueries.FormattingEnabled = true;
-            listBoxQueries.Location = new Point(12, 12);
-            listBoxQueries.Name = "listBoxQueries";
-            listBoxQueries.Size = new Size(1950, 260);
-            listBoxQueries.TabIndex = 1;
-            // 
             // GenerateMigration
             // 
-            GenerateMigration.Location = new Point(824, 1023);
+            GenerateMigration.Dock = DockStyle.Bottom;
+            GenerateMigration.Location = new Point(0, 821);
+            GenerateMigration.Margin = new Padding(2);
             GenerateMigration.Name = "GenerateMigration";
-            GenerateMigration.Size = new Size(261, 93);
+            GenerateMigration.Size = new Size(1522, 73);
             GenerateMigration.TabIndex = 2;
             GenerateMigration.Text = "GenerateMigration";
             GenerateMigration.UseVisualStyleBackColor = true;
             GenerateMigration.Click += GenerateMigration_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 22);
+            label1.Name = "label1";
+            label1.Size = new Size(168, 25);
+            label1.TabIndex = 3;
+            label1.Text = "Source repositories:";
+            // 
+            // textBoxSourceRepositoryPath
+            // 
+            textBoxSourceRepositoryPath.Location = new Point(186, 22);
+            textBoxSourceRepositoryPath.Name = "textBoxSourceRepositoryPath";
+            textBoxSourceRepositoryPath.ReadOnly = true;
+            textBoxSourceRepositoryPath.Size = new Size(952, 31);
+            textBoxSourceRepositoryPath.TabIndex = 4;
+            // 
+            // buttonSelectSourceRepository
+            // 
+            buttonSelectSourceRepository.Location = new Point(1169, 22);
+            buttonSelectSourceRepository.Name = "buttonSelectSourceRepository";
+            buttonSelectSourceRepository.Size = new Size(219, 34);
+            buttonSelectSourceRepository.TabIndex = 5;
+            buttonSelectSourceRepository.Text = "Select source repository";
+            buttonSelectSourceRepository.UseVisualStyleBackColor = true;
+            buttonSelectSourceRepository.Click += buttonSelectSourceRepository_Click;
             // 
             // MigrationGenerator
             // 
-            AutoScaleDimensions = new SizeF(13F, 32F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1974, 1129);
+            ClientSize = new Size(1522, 894);
+            Controls.Add(buttonSelectSourceRepository);
+            Controls.Add(textBoxSourceRepositoryPath);
+            Controls.Add(label1);
             Controls.Add(GenerateMigration);
-            Controls.Add(listBoxQueries);
             Controls.Add(richFileTextBox);
-            MaximumSize = new Size(2000, 1200);
-            MinimumSize = new Size(2000, 1200);
+            Margin = new Padding(2);
             Name = "MigrationGenerator";
             Text = "MigrationGenerator";
+            Load += MigrationGenerator_Load;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private RichTextBox richFileTextBox;
-        private ListBox listBoxQueries;
         private Button GenerateMigration;
         private FolderBrowserDialog folderBrowserDialog;
+        private Label label1;
+        private TextBox textBoxSourceRepositoryPath;
+        private Button buttonSelectSourceRepository;
     }
 }

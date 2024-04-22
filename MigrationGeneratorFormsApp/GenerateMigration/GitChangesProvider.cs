@@ -1,82 +1,35 @@
 ﻿using GenerateMigration.Abstractions;
-using GenerateMigration.Models;
-using System.Diagnostics;
+using LibGit2Sharp;
 
 namespace GenerateMigration
 {
     public class GitChangesProvider : IGitChangesProvider
     {
-        public List<string> GetModifiedFiles(string gitRepositoryPath)
-        {
-            return GetSqlFiles(gitRepositoryPath, GitFilesMode.ModifiedFiles);
-        }
-
         public List<string> GetCreatedFiles(string gitRepositoryPath)
         {
-            List<string> gitFiles = [];
-            gitFiles.AddRange(GetSqlFiles(gitRepositoryPath, GitFilesMode.UntrackedFiles));
-            gitFiles.AddRange(GetSqlFiles(gitRepositoryPath, GitFilesMode.AdedFiles));
-            return gitFiles;
+            return GetChanges(gitRepositoryPath, ChangeKind.Added);
         }
 
         public List<string> GetDeletedFiles(string gitRepositoryPath)
         {
-            return GetSqlFiles(gitRepositoryPath, GitFilesMode.AdedFiles);
+            return GetChanges(gitRepositoryPath, ChangeKind.Deleted);
         }
 
-        private List<string> GetGitChangedFilesPath(string gitRepositoryPath)
+        public List<string> GetModifiedFiles(string gitRepositoryPath)
         {
-
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                WorkingDirectory = gitRepositoryPath,
-                FileName = "git",
-                Arguments = "status --porcelain",
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using (Process process = new Process())
-            {
-                process.StartInfo = startInfo;
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
-                List<string> files = [];
-                StringReader reader = new(output);
-                string? line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    files.Add(line);
-                }
-                return files;
-            }
+            return GetChanges(gitRepositoryPath, ChangeKind.Modified);
         }
 
-        private List<string> GetSqlFiles(string gitRepositoryPath, string getGitFilesMode)
+        private List<string> GetChanges(string gitRepositoryPath, ChangeKind changeKind)
         {
-            if (!Path.Exists(gitRepositoryPath))
-                throw new Exception($"Git Repository path does not exist.");
-            string sqlFile;
-            List<string> files = GetGitChangedFilesPath(gitRepositoryPath);
-            List<string> sqlFiles = new List<string>();
-            foreach (string file in files)
+            using (var repo = new Repository(gitRepositoryPath))
             {
-                if (Path.GetExtension(file) == ".sql" && file.StartsWith(getGitFilesMode))
-                {
-                    sqlFile = file.Substring(3).Trim();
-                    while (!Path.Exists(Path.Combine(gitRepositoryPath, sqlFile)))
-                    {
-                        gitRepositoryPath = Directory.GetParent(gitRepositoryPath)?.FullName ?? throw new Exception("file not founded");
-                    }
-                    sqlFile = Path.Combine(gitRepositoryPath, sqlFile);
-                    sqlFiles.Add(sqlFile);
-                }
+                var changes = repo.Diff.Compare<TreeChanges>(repo.Head.Tip.Tree, DiffTargets.Index | DiffTargets.WorkingDirectory);
+                return changes
+                    .Where(c => c.Path.EndsWith(".sql") && c.Status == changeKind)
+                    .Select(c => Path.Combine(gitRepositoryPath, c.Path))
+                    .ToList();
             }
-
-            return sqlFiles;
         }
     }
 }

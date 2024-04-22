@@ -1,10 +1,9 @@
-﻿
-using GenerateMigration.Models;
+﻿using GenerateMigration.Models;
 
 namespace GenerateMigration.Abstractions
 {
     public interface IQueryTypeClasyficator
     {
-        QueryTypes GetQueryType(string filePath);
+        QueryType GetQueryType(string filePath, SqlFileMode fileMode);
     }
 }

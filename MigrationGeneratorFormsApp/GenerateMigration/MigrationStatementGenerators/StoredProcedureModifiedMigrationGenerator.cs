@@ -3,14 +3,13 @@ namespace GenerateMigration.MigrationStatementGenerators
 {
     public class StoredProcedureModifiedMigrationGenerator : SQLMigrationStatementGenerator
     {
-
-        public override string GenereteMigrationStatement(string filePath)
+        public override string GenereteMigrationStatement(string statementCode)
         {
-            string originalQuery = GetFileContent(filePath);
-            Regex regex = new(Regex.Escape("CREATE"));
+            string originalQuery = statementCode;
 
-            string updatedQuery = regex.Replace(originalQuery,"CREATE OR ALTER", 1);
-            updatedQuery += Environment.NewLine + Environment.NewLine + "GO" + Environment.NewLine + Environment.NewLine;
+            string pattern = Regex.Escape("CREATE PROCEDURE");
+            string updatedQuery = Regex.Replace(originalQuery, pattern, "CREATE OR ALTER PROCEDURE ", RegexOptions.IgnoreCase);
+            updatedQuery += Environment.NewLine + "GO" + Environment.NewLine + Environment.NewLine;
             return updatedQuery;
         }
     }

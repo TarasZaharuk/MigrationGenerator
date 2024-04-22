@@ -1,9 +1,10 @@
 ﻿namespace GenerateMigration.Models
 {
-    public enum QueryTypes
+    public enum QueryType
     {
-        StoredProcedure,
         Function,
+        StoredProcedure,
+        NewTable,
         NotRecognized,
     }
 }
