@@ -17,6 +17,7 @@ namespace GenerateMigration
             statementGenerators.Add(QueryType.StoredProcedure, new StoredProcedureModifiedMigrationGenerator());
             statementGenerators.Add(QueryType.Function, new FunctionModifiedMigrationGenerator());
             statementGenerators.Add(QueryType.NotRecognized, new NotSupportedQueryGenerator());
+            statementGenerators.Add(QueryType.NewTable, new CreateNewTableMigrationGenerator());
         }
 
         public string GenerateMigration(string gitRepositoryPath)

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MigrationGenerator.Core", "GenerateMigration\MigrationGenerator.Core.csproj", "{33C123C6-1527-4031-A5CE-5E251275C0C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppUI", "WpfAppUI\WpfAppUI.csproj", "{4944759C-8FAC-4D41-8C8F-77F25EE248DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfAppUI", "WpfAppUI\WpfAppUI.csproj", "{4944759C-8FAC-4D41-8C8F-77F25EE248DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

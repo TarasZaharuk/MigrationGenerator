@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         mc:Ignorable="d"
         Title="MigrationGenerator" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="40.04"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -19,10 +19,10 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock FontSize="18" VerticalAlignment="Center" Margin="10" FontWeight="Bold">Source repository:</TextBlock>
-            <TextBlock Name="repositoryPathTextBlock" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="10" FontWeight="Bold"> </TextBlock>
+            <TextBlock Name="repositoryPathTextBlock" Grid.Column="1" FontSize="18" VerticalAlignment="Center" Margin="10" FontWeight="Bold"></TextBlock>
             <Button Margin="5" Grid.Column="2" Background="Azure" Click="Button_Click" >Browse</Button>
         </Grid>
-        <avalonEdit:TextEditor Name="migrationTextBlock" SyntaxHighlighting="SQL" IsReadOnly="True" Grid.Row ="1"/>
-        <Button Name="generateMigrationButton" Background="Azure" Grid.Row="2" Click="generateMigrationButton_Click">Genetate migration</Button>
+        <avalonEdit:TextEditor Name="sqlEditor" Grid.Row ="1" SyntaxHighlighting="SQL" FontFamily="Consolas" FontSize="14"/>
+        <Button Name="generateMigrationButton" Background="Azure" Grid.Row="2" Click="generateMigrationButton_Click">Generate migration</Button>
     </Grid>
 </Window>
